@@ -2,36 +2,36 @@
 
 ## Problem Statement ~
 
-Many transport and logistics companies still depend on spreadsheets,
-manual registers, and disconnected software to manage their fleet.
+Many transport and logistics companies still **depend on spreadsheets**,
+manual registers, and disconnected **software to manage their fleet**.
 
-This causes:
+**This causes:**
 
-• Duplicate dispatches
+**• Duplicate dispatches
 
-• Driver scheduling conflicts
+**• Driver scheduling conflicts
 
-• Expired licenses
+**• Expired licenses**
 
-• Missed maintenance
+**• Missed maintenance**
 
-• Fuel leakage
+**• Fuel leakage
 
-• Poor operational visibility
+**• Poor operational visibility
 
-• High operational costs
+**• High operational costs
 
 TransitOps solves these problems through an integrated digital transport management platform capable of managing the complete lifecycle of vehicles, drivers, trips, maintenance, expenses, and business analytics.
 
 ---
 
-A modern, full-stack Transport Operations Management Platform built to digitize fleet operations, driver management, dispatching, maintenance, fuel tracking, operational expenses, and business analytics.
+A modern, **full-stack Transport Operations Management Platform** built to digitize fleet operations, driver management, dispatching, maintenance, fuel tracking, operational expenses, and business analytics.
 
-TransitOps replaces manual spreadsheets and fragmented workflows with a centralized platform that provides complete visibility into transport operations while enforcing critical business rules throughout the vehicle lifecycle ... 
+TransitOps **replaces manual spreadsheets and fragmented workflows with a centralized platform** that provides complete visibility into transport operations while enforcing critical business rules throughout the vehicle lifecycle ... 
 
 Digitize vehicle lifecycle, dispatch operations, fleet maintenance, fuel monitoring, expense tracking, and business analytics through a centralized, scalable platform ... 
 
-TransitOps enables organizations to efficiently manage transportation operations through a secure, scalable, and role-based system.
+TransitOps enables organizations to **efficiently manage transportation operations through** a secure, scalable, and role-based system.
 
 ---
 
