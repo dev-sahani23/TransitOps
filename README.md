@@ -1,44 +1,502 @@
-# TransitOps Transport Management ERP
+# TransitOps
 
-TransitOps is a comprehensive transport management enterprise resource planning (ERP) application. It consists of a React (Vite) frontend and a Node.js (Express) backend.
+A modern, full-stack Transport Operations Management Platform built to digitize fleet operations, driver management, dispatching, maintenance, fuel tracking, operational expenses, and business analytics.
 
-## Prerequisites
+TransitOps replaces manual spreadsheets and fragmented workflows with a centralized platform that provides complete visibility into transport operations while enforcing critical business rules throughout the vehicle lifecycle.
 
-Before running the project, ensure you have the required software installed on your system. You can check `requirements.txt` for the list of required system tools. 
+---
 
-At a minimum, you will need:
+## Overview
+
+TransitOps enables organizations to efficiently manage transportation operations through a secure, scalable, and role-based system.
+
+The platform provides end-to-end management of:
+
+- Fleet Management
+- Vehicle Registry
+- Driver Management
+- Trip Dispatch
+- Maintenance Scheduling
+- Fuel Logging
+- Expense Tracking
+- Operational Analytics
+- Role Based Access Control (RBAC)
+
+Designed with scalability, maintainability, and enterprise architecture in mind, TransitOps follows a modular backend architecture and a modern frontend stack.
+
+---
+
+## Key Features
+
+### Authentication
+
+- Secure Login
+- JWT Authentication
+- Refresh Tokens
+- Password Encryption
+- Protected Routes
+- Role Based Access Control
+
+---
+
+### Dashboard
+
+- Fleet Overview
+- Active Trips
+- Pending Trips
+- Vehicle Utilization
+- Driver Status
+- Fleet KPIs
+- Interactive Analytics
+- Operational Insights
+
+---
+
+### Vehicle Management
+
+- Register Vehicles
+- Vehicle Status Tracking
+- Vehicle Categories
+- Registration Validation
+- Capacity Management
+- Odometer Tracking
+- Acquisition Cost
+- Vehicle Lifecycle
+
+---
+
+### Driver Management
+
+- Driver Profiles
+- License Verification
+- License Expiry Monitoring
+- Driver Availability
+- Safety Score Tracking
+- Contact Management
+- Assignment History
+
+---
+
+### Trip Management
+
+- Create Trips
+- Vehicle Assignment
+- Driver Assignment
+- Dispatch Workflow
+- Cargo Validation
+- Distance Tracking
+- Trip Status Lifecycle
+
+```
+Draft
+    ↓
+Dispatched
+    ↓
+Completed
+    ↓
+Archived
+```
+
+---
+
+### Maintenance Management
+
+- Maintenance Logs
+- Service History
+- Vehicle Availability Automation
+- Repair Records
+- Scheduled Maintenance
+
+---
+
+### Fuel & Expense Management
+
+- Fuel Logs
+- Fuel Consumption
+- Expense Tracking
+- Toll Expenses
+- Maintenance Expenses
+- Operational Cost Calculation
+
+---
+
+### Reports & Analytics
+
+- Fleet Utilization
+- Fuel Efficiency
+- Operational Cost
+- Vehicle ROI
+- Driver Performance
+- Export Reports
+- Business Insights
+
+---
+
+## Business Rules
+
+TransitOps automatically enforces operational constraints to ensure data integrity and eliminate scheduling conflicts.
+
+Examples include:
+
+- Unique Vehicle Registration Numbers
+- Vehicle Capacity Validation
+- Driver License Validation
+- Automatic Vehicle Status Updates
+- Automatic Driver Status Updates
+- Maintenance Locking
+- Trip Assignment Validation
+- Dispatch Availability Checks
+
+These validations are performed on the server before any business operation is executed.
+
+---
+
+# Technology Stack
+
+## Frontend
+
+- React
+- TanStack Router
+- Vite
+- TypeScript
+- Modern CSS
+- REST API Integration
+
+---
+
+## Backend
+
 - Node.js
-- npm (Node Package Manager)
+- Express.js
+- Prisma ORM
+- JWT Authentication
+- REST API
 
-## How to Run the Project
+---
 
-To start the application locally, you need to run both the backend and frontend servers simultaneously. Open **two separate terminal windows** and follow the steps below.
+## Database
 
-### 1. Run the Backend Server
+- PostgreSQL
+- Prisma Schema
+- Database Migrations
 
-Open your first terminal, navigate to the `backend` folder, install the dependencies, and start the server:
+---
+
+## Development Tools
+
+- ESLint
+- Prettier
+- Git
+- npm
+
+---
+
+# Project Structure
+
+```
+TransitOps
+│
+├── backend
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── prisma
+│   ├── routes
+│   ├── services
+│   ├── utils
+│   ├── validations
+│   ├── app.js
+│   ├── server.js
+│   └── package.json
+│
+├── frontend
+│   ├── public
+│   ├── src
+│   ├── tanstack
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+# Architecture
+
+```
+                   Client
+                      │
+                      │
+                React Frontend
+                      │
+             REST API Requests
+                      │
+                Express Server
+                      │
+      ┌───────────────┼───────────────┐
+      │               │               │
+ Controllers      Middleware      Services
+      │               │               │
+      └───────────────┼───────────────┘
+                      │
+                 Prisma ORM
+                      │
+                 PostgreSQL
+```
+
+---
+
+# Installation
+
+## Clone Repository
+
+```bash
+git clone <repository-url>
+
+cd TransitOps
+```
+
+---
+
+## Backend Setup
 
 ```bash
 cd backend
-npm install             # Install all backend dependencies
-npm run prisma:generate # Generate the Prisma Client
-npm run prisma:migrate  # Apply database migrations
-npm run seed            # (Optional) Populate the database with initial mock data
-npm run dev             # Start the backend server (default: http://localhost:5000)
+
+npm install
 ```
 
-### 2. Run the Frontend App
+Create a `.env` file.
 
-Open your second terminal, navigate to the `frontend` folder, install the dependencies, and start the development server:
+Example:
+
+```env
+PORT=5000
+
+DATABASE_URL=
+
+JWT_SECRET=
+
+JWT_EXPIRES_IN=
+
+REFRESH_SECRET=
+```
+
+Run database migrations.
+
+```bash
+npx prisma migrate dev
+```
+
+Generate Prisma Client.
+
+```bash
+npx prisma generate
+```
+
+Start backend.
+
+```bash
+npm run dev
+```
+
+---
+
+## Frontend Setup
 
 ```bash
 cd frontend
-npm install             # Install all frontend dependencies
-npm run dev             # Start the Vite development server (default: http://localhost:5173)
+
+npm install
 ```
 
-Once both servers are up and running, you can open your browser to the frontend URL (usually `http://localhost:5173`) to view and interact with the application.
+Create `.env`
 
-## Other Requirements
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-For any other necessary requirements or dependencies, please refer to the `requirements.txt` file located in the root directory.
+Start development server.
+
+```bash
+npm run dev
+```
+
+---
+
+# Environment Variables
+
+Backend
+
+| Variable | Description |
+|----------|-------------|
+| PORT | Server Port |
+| DATABASE_URL | PostgreSQL Connection |
+| JWT_SECRET | Access Token Secret |
+| REFRESH_SECRET | Refresh Token Secret |
+| JWT_EXPIRES_IN | Token Expiration |
+
+Frontend
+
+| Variable | Description |
+|----------|-------------|
+| VITE_API_URL | Backend Base URL |
+
+---
+
+# API Modules
+
+Authentication
+
+```
+POST   /auth/login
+POST   /auth/register
+POST   /auth/refresh
+POST   /auth/logout
+```
+
+Vehicles
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Drivers
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Trips
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Maintenance
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Fuel
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Expenses
+
+```
+GET
+POST
+PUT
+DELETE
+```
+
+Reports
+
+```
+GET
+```
+
+---
+
+# Security
+
+- JWT Authentication
+- Protected API Routes
+- Password Hashing
+- Role Based Authorization
+- Request Validation
+- Input Sanitization
+- Centralized Error Handling
+- Secure Environment Configuration
+
+---
+
+# Development Workflow
+
+```
+Feature Branch
+        │
+        ▼
+Implementation
+        │
+        ▼
+Validation
+        │
+        ▼
+Testing
+        │
+        ▼
+Pull Request
+        │
+        ▼
+Review
+        │
+        ▼
+Merge
+```
+
+---
+
+# Future Enhancements
+
+- Live GPS Tracking
+- Route Optimization
+- Predictive Maintenance
+- Email Notifications
+- Push Notifications
+- Document Management
+- AI Assisted Dispatch
+- Fuel Consumption Prediction
+- Advanced Reporting
+- Mobile Application
+
+---
+
+# Performance Goals
+
+- Modular Codebase
+- Scalable Architecture
+- Reusable Services
+- Optimized Database Queries
+- Fast API Responses
+- Maintainable Project Structure
+
+---
+
+# License
+
+This project is developed for educational and hackathon purposes.
+
+---
+
+# Contributors
+
+Developed by the TransitOps Team.
+
+Contributions, issues, and feature requests are welcome.
+
+---
+
+# Acknowledgements
+
+Built as part of the Odoo Hackathon challenge to modernize transport operations through digital fleet management, operational automation, and business analytics.
