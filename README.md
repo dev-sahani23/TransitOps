@@ -71,7 +71,7 @@ TransitOps enables organizations to **efficiently manage transportation operatio
 <img width="1558" height="662" alt="image" src="https://github.com/user-attachments/assets/7ed41cf0-53e2-4d01-a128-912842a5760a" />
 
 
-The platform provides end-to-end management of:
+**The platform provides end-to-end management of:**
 
 - Fleet Management
 - Vehicle Registry
