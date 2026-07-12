@@ -1,8 +1,12 @@
 # TransitOps
 
+Enterprise Fleet & Transport Operations Management Platform
+
 A modern, full-stack Transport Operations Management Platform built to digitize fleet operations, driver management, dispatching, maintenance, fuel tracking, operational expenses, and business analytics.
 
-TransitOps replaces manual spreadsheets and fragmented workflows with a centralized platform that provides complete visibility into transport operations while enforcing critical business rules throughout the vehicle lifecycle.
+TransitOps replaces manual spreadsheets and fragmented workflows with a centralized platform that provides complete visibility into transport operations while enforcing critical business rules throughout the vehicle lifecycle ... 
+
+Digitize vehicle lifecycle, dispatch operations, fleet maintenance, fuel monitoring, expense tracking, and business analytics through a centralized, scalable platform ... 
 
 ---
 
