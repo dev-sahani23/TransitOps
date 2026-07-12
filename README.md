@@ -1,6 +1,6 @@
 # TransitOps ( Transportantion Management System ) 
 
-## Problem Statement ~ 
+## Problem Statement 
 
 Many transport and logistics companies still depend on spreadsheets,
 manual registers, and disconnected software to manage their fleet.
@@ -31,6 +31,8 @@ TransitOps replaces manual spreadsheets and fragmented workflows with a centrali
 
 Digitize vehicle lifecycle, dispatch operations, fleet maintenance, fuel monitoring, expense tracking, and business analytics through a centralized, scalable platform ... 
 
+TransitOps enables organizations to efficiently manage transportation operations through a secure, scalable, and role-based system.
+
 ---
 
 ## Tech Stack 
@@ -50,20 +52,24 @@ Digitize vehicle lifecycle, dispatch operations, fleet maintenance, fuel monitor
 
 ## Overview
 
-- Dashboard Section 
+## Dashboard Section 
 <img width="1841" height="736" alt="image" src="https://github.com/user-attachments/assets/4e49bc47-564e-4d54-9441-d7d0acc217a7" />
 
-- Dispatch Section
+## Dispatch Section
 <img width="1836" height="790" alt="image" src="https://github.com/user-attachments/assets/98c40784-3fac-493c-9608-f044ded3c816" />
 
-- Vehicle Data
+## Vehicle Data
 <img width="1841" height="717" alt="image" src="https://github.com/user-attachments/assets/6333df59-f5ca-4b0f-b419-285520d22d8c" />
 
-- Drivers Data
+## Drivers Data
 <img width="1560" height="635" alt="image" src="https://github.com/user-attachments/assets/d0d7edc5-9c48-436a-afe0-8a8720f01785" />
 
+## Vehicle Maintainance
+<img width="1560" height="635" alt="image" src="https://github.com/user-attachments/assets/a1bd82b7-21bf-440c-bce1-1a9ddd6b29c6" />
 
-TransitOps enables organizations to efficiently manage transportation operations through a secure, scalable, and role-based system.
+## Logistic Revenue
+<img width="1558" height="662" alt="image" src="https://github.com/user-attachments/assets/7ed41cf0-53e2-4d01-a128-912842a5760a" />
+
 
 The platform provides end-to-end management of:
 
@@ -83,7 +89,7 @@ Designed with scalability, maintainability, and enterprise architecture in mind,
 
 ## Key Features
 
-### Authentication
+### Authentication ✅
 
 - Secure Login
 - JWT Authentication
@@ -94,7 +100,7 @@ Designed with scalability, maintainability, and enterprise architecture in mind,
 
 ---
 
-### Dashboard
+### Dashboard ✅
 
 - Fleet Overview
 - Active Trips
@@ -107,7 +113,7 @@ Designed with scalability, maintainability, and enterprise architecture in mind,
 
 ---
 
-### Vehicle Management
+### Vehicle Management ✅
 
 - Register Vehicles
 - Vehicle Status Tracking
@@ -120,7 +126,7 @@ Designed with scalability, maintainability, and enterprise architecture in mind,
 
 ---
 
-### Driver Management
+### Driver Management ✅
 
 - Driver Profiles
 - License Verification
@@ -132,7 +138,7 @@ Designed with scalability, maintainability, and enterprise architecture in mind,
 
 ---
 
-### Trip Management
+### Trip Management ✅
 
 - Create Trips
 - Vehicle Assignment
@@ -154,7 +160,7 @@ Archived
 
 ---
 
-### Maintenance Management
+### Maintenance Management ✅
 
 - Maintenance Logs
 - Service History
@@ -163,8 +169,8 @@ Archived
 - Scheduled Maintenance
 
 ---
-
-### Fuel & Expense Management
+ 
+### Fuel & Expense Management ✅
 
 - Fuel Logs
 - Fuel Consumption
@@ -175,7 +181,7 @@ Archived
 
 ---
 
-### Reports & Analytics
+### Reports & Analytics ✅
 
 - Fleet Utilization
 - Fuel Efficiency
@@ -187,7 +193,7 @@ Archived
 
 ---
 
-## Business Rules
+## Business Rules ✅
 
 TransitOps automatically enforces operational constraints to ensure data integrity and eliminate scheduling conflicts.
 
@@ -206,7 +212,7 @@ These validations are performed on the server before any business operation is e
 
 ---
 
-# Technology Stack
+# Technology Stack ⚙️
 
 ## Frontend
 
