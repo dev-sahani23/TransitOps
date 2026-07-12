@@ -37,13 +37,17 @@ app.get('/api/v1/health', (req, res) => {
 });
 
 // Mount Routes
+const tripRoutes = require('./routes/trip.routes');
+const maintenanceRoutes = require('./routes/maintenance.routes');
+const expenseRoutes = require('./routes/expense.routes');
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/vehicles', vehicleRoutes);
 app.use('/api/v1/drivers', driverRoutes);
+app.use('/api/v1/trips', tripRoutes);
+app.use('/api/v1/maintenance', maintenanceRoutes);
+app.use('/api/v1/expenses', expenseRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
-
-// TODO: Developer B - Mount your routes here
-// app.use('/api/v1/trips', tripRoutes);
 // app.use('/api/v1/maintenance', maintenanceRoutes);
 // app.use('/api/v1/fuel', fuelRoutes);
 // app.use('/api/v1/expenses', expenseRoutes);

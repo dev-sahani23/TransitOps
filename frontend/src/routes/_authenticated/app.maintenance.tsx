@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchMaintenance, fetchVehicles } from "@/lib/fleet-queries";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -95,15 +96,25 @@ function AddMaintenanceDialog() {
 
   const m = useMutation({
     mutationFn: async () => {
-      // Mock insert delay
-      await new Promise((r) => setTimeout(r, 800));
+      const payload = {
+        vehicleId: form.vehicle_id,
+        type: form.type,
+        description: form.description,
+        cost: form.cost,
+        odometer: form.odometer_km,
+        status: "SCHEDULED",
+        startDate: new Date().toISOString(),
+      };
+      const res = await api.post("/maintenance", payload);
+      return res.data;
     },
     onSuccess: () => {
       toast.success("Maintenance logged");
       qc.invalidateQueries();
       setOpen(false);
+      setForm({ vehicle_id: "", type: "scheduled", description: "", cost: 0, odometer_km: 0 });
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e: any) => toast.error(e.response?.data?.message || e.response?.data?.errors?.[0]?.message || e.message || "Failed to log maintenance"),
   });
 
   return (

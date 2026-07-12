@@ -6,7 +6,7 @@ import { StatusPill, expiryBadge } from "@/lib/fleet-ui";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Phone, Star, ArrowRight, Plus } from "lucide-react";
 import { useState } from "react";
-import DriverForm from "@/components/ui/DriverForm";
+import DriverForm from "@/components/ui/driverForm";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/drivers")({

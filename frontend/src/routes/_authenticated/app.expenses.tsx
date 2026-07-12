@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchExpenses, fetchVehicles, fetchTrips } from "@/lib/fleet-queries";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -153,8 +154,16 @@ function LogExpenseDialog() {
 
   const m = useMutation({
     mutationFn: async () => {
-      // Mock insert delay
-      await new Promise((r) => setTimeout(r, 800));
+      const payload = {
+        vehicleId: form.vehicle_id,
+        tripId: form.trip_id,
+        category: form.category,
+        amount: form.amount,
+        notes: form.notes,
+        date: new Date().toISOString(),
+      };
+      const res = await api.post("/expenses", payload);
+      return res.data;
     },
     onSuccess: () => {
       toast.success("Expense logged");
@@ -162,7 +171,7 @@ function LogExpenseDialog() {
       setOpen(false);
       setForm({ vehicle_id: "", trip_id: "", category: "fuel", amount: 0, notes: "" });
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e: any) => toast.error(e.response?.data?.message || e.response?.data?.errors?.[0]?.message || e.message || "Failed to log expense"),
   });
 
   return (

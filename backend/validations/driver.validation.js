@@ -3,13 +3,25 @@ const { body } = require('express-validator');
 exports.driverValidation = [
   body('name')
     .notEmpty().withMessage('Driver name is required'),
+  body('email')
+    .optional({ checkFalsy: true })
+    .isEmail().withMessage('Must be a valid email'),
+  body('dateOfBirth')
+    .optional({ checkFalsy: true })
+    .isISO8601().withMessage('Must be a valid ISO date')
+    .toDate(),
+  body('joiningDate')
+    .optional({ checkFalsy: true })
+    .isISO8601().withMessage('Must be a valid ISO date')
+    .toDate(),
   body('licenseNumber')
     .notEmpty().withMessage('License number is required'),
   body('licenseCategory')
     .notEmpty().withMessage('License category is required'),
   body('licenseExpiry')
     .notEmpty().withMessage('License expiry date is required')
-    .isISO8601().withMessage('Must be a valid ISO date'),
+    .isISO8601().withMessage('Must be a valid ISO date')
+    .toDate(),
   body('phone')
     .notEmpty().withMessage('Phone number is required')
     .matches(/^\+?[0-9\s-]+$/).withMessage('Must be a valid phone number pattern'),

@@ -32,7 +32,14 @@ exports.getById = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const driver = await driverService.create(req.body);
+    const data = { ...req.body };
+    // Convert empty strings to null for optional fields to satisfy Prisma
+    if (data.email === "") data.email = null;
+    if (data.dateOfBirth === "") data.dateOfBirth = null;
+    if (data.joiningDate === "") data.joiningDate = null;
+    if (data.safetyScore === "") data.safetyScore = null;
+
+    const driver = await driverService.create(data);
     return success(res, 201, 'Driver created successfully', driver);
   } catch (error) {
     next(error);
@@ -41,7 +48,13 @@ exports.create = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const driver = await driverService.update(req.params.id, req.body);
+    const data = { ...req.body };
+    if (data.email === "") data.email = null;
+    if (data.dateOfBirth === "") data.dateOfBirth = null;
+    if (data.joiningDate === "") data.joiningDate = null;
+    if (data.safetyScore === "") data.safetyScore = null;
+
+    const driver = await driverService.update(req.params.id, data);
     return success(res, 200, 'Driver updated successfully', driver);
   } catch (error) {
     if (error.message.includes('not found')) {

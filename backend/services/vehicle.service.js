@@ -6,7 +6,8 @@ exports.getAll = async ({ skip, take, search, status, type }) => {
   if (search) {
     where.OR = [
       { registrationNumber: { contains: search, mode: 'insensitive' } },
-      { vehicleName: { contains: search, mode: 'insensitive' } },
+      { make: { contains: search, mode: 'insensitive' } },
+      { model: { contains: search, mode: 'insensitive' } },
     ];
   }
   

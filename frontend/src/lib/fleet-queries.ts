@@ -39,6 +39,8 @@ export type Trip = {
   dest_lat: number;
   dest_lng: number;
   cargo_description: string | null;
+  vehicle?: Vehicle | null;
+  driver?: Driver | null;
 };
 export type Maintenance = {
   id: string;
@@ -48,8 +50,9 @@ export type Maintenance = {
   type: string;
   description: string;
   odometer_km?: number | null;
+  vehicle?: Vehicle | null;
 };
-export type Expense = { id: string; category: string; amount: number; incurred_at: string; notes?: string | null };
+export type Expense = { id: string; category: string; amount: number; incurred_at: string; notes?: string | null; vehicle?: Vehicle | null; trip?: Trip | null; };
 
 const mockVehicles: Vehicle[] = [
   {
@@ -167,8 +170,8 @@ function mapVehicle(backendVehicle: any): Vehicle {
   return {
     id: backendVehicle.id,
     reg_number: backendVehicle.registrationNumber,
-    make: backendVehicle.vehicleName.split(" ")[0] || "Unknown",
-    model: backendVehicle.vehicleName.split(" ").slice(1).join(" ") || "Model",
+    make: backendVehicle.make || "Unknown",
+    model: backendVehicle.model || "Model",
     type: backendVehicle.vehicleType,
     status: backendVehicle.status.toLowerCase(), // frontend expects lowercase
     capacity_kg: backendVehicle.maximumCapacity,
@@ -214,15 +217,68 @@ export async function fetchDrivers(): Promise<Driver[]> {
   }
 }
 
-// Still using mocks for the un-implemented backend routes
-export async function fetchTrips() {
-  return mockTrips;
+export async function fetchTrips(): Promise<Trip[]> {
+  try {
+    const res = await api.get("/trips");
+    return res.data.data.trips.map((backendTrip: any) => ({
+      id: backendTrip.id,
+      code: backendTrip.id.substring(0, 8).toUpperCase(),
+      status: backendTrip.status,
+      revenue: backendTrip.revenue,
+      scheduled_at: backendTrip.dispatchTime || backendTrip.createdAt,
+      completed_at: backendTrip.completionTime,
+      distance_km: backendTrip.plannedDistance,
+      origin: backendTrip.source,
+      destination: backendTrip.destination,
+      origin_lat: 0,
+      origin_lng: 0,
+      dest_lat: 0,
+      dest_lng: 0,
+      cargo_description: backendTrip.cargo,
+      vehicle: backendTrip.vehicle ? mapVehicle(backendTrip.vehicle) : null,
+      driver: backendTrip.driver ? mapDriver(backendTrip.driver) : null,
+    }));
+  } catch (error) {
+    console.warn("Failed to fetch trips from backend, falling back to mock", error);
+    return mockTrips;
+  }
 }
-export async function fetchMaintenance() {
-  return mockMaintenance;
+
+export async function fetchMaintenance(): Promise<Maintenance[]> {
+  try {
+    const res = await api.get("/maintenance");
+    return res.data.data.logs.map((backendLog: any) => ({
+      id: backendLog.id,
+      vehicle_id: backendLog.vehicleId,
+      service_date: backendLog.startDate,
+      cost: backendLog.cost,
+      type: backendLog.type,
+      description: backendLog.description,
+      odometer_km: backendLog.odometer,
+      vehicle: backendLog.vehicle ? mapVehicle(backendLog.vehicle) : null,
+    }));
+  } catch (error) {
+    console.warn("Failed to fetch maintenance from backend, falling back to mock", error);
+    return mockMaintenance as unknown as Maintenance[];
+  }
 }
-export async function fetchExpenses() {
-  return mockExpenses;
+
+export async function fetchExpenses(): Promise<Expense[]> {
+  try {
+    const res = await api.get("/expenses");
+    return res.data.data.expenses.map((backendExpense: any) => ({
+      id: backendExpense.id,
+      category: backendExpense.category,
+      amount: backendExpense.amount,
+      incurred_at: backendExpense.date,
+      notes: backendExpense.notes,
+      vehicle: backendExpense.vehicle ? mapVehicle(backendExpense.vehicle) : null,
+      trip: backendExpense.trip ? { id: backendExpense.trip.id } : null,
+    }));
+  } catch (error) {
+    console.warn("Failed to fetch expenses from backend, falling back to mock", error);
+    return mockExpenses as unknown as Expense[];
+  }
 }
 
 export async function fetchDashboard() {

@@ -4,8 +4,10 @@ exports.vehicleValidation = [
   body('registrationNumber')
     .notEmpty().withMessage('Registration number is required')
     .matches(/^[A-Za-z0-9-]+$/).withMessage('Registration number must be alphanumeric'),
-  body('vehicleName')
-    .notEmpty().withMessage('Vehicle name is required'),
+  body('make')
+    .notEmpty().withMessage('Make is required'),
+  body('model')
+    .notEmpty().withMessage('Model is required'),
   body('vehicleType')
     .notEmpty().withMessage('Vehicle type is required'),
   body('maximumCapacity')

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchVehicles, fetchMaintenance } from "@/lib/fleet-queries";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusPill, expiryBadge, currency } from "@/lib/fleet-ui";
@@ -111,16 +112,23 @@ function AddVehicleDialog() {
   });
   const m = useMutation({
     mutationFn: async () => {
-      // Mock insert delay
-      await new Promise((r) => setTimeout(r, 800));
+      const payload = {
+        registrationNumber: form.reg_number,
+        make: form.make.trim(),
+        model: form.model.trim(),
+        vehicleType: form.type,
+        maximumCapacity: form.capacity_kg,
+      };
+      const res = await api.post("/vehicles", payload);
+      return res.data;
     },
     onSuccess: () => {
-      toast.success("Vehicle added (Mock)");
+      toast.success("Vehicle registered successfully");
       qc.invalidateQueries({ queryKey: ["vehicles"] });
       setOpen(false);
       setForm({ reg_number: "", make: "", model: "", type: "LCV", capacity_kg: 1000 });
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e: any) => toast.error(e.response?.data?.message || e.response?.data?.errors?.[0]?.message || e.message || "Failed to register vehicle"),
   });
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -8,6 +8,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DriverFormProps {
   open: boolean;
@@ -15,14 +17,14 @@ interface DriverFormProps {
 }
 
 interface DriverData {
-  full_name: string;
-  contact_number: string;
+  name: string;
+  phone: string;
   email: string;
-  date_of_birth: string;
-  license_number: string;
-  license_category: string;
-  license_expiry: string;
-  joining_date: string;
+  dateOfBirth: string;
+  licenseNumber: string;
+  licenseCategory: string;
+  licenseExpiry: string;
+  joiningDate: string;
   status: string;
 }
 
@@ -31,16 +33,17 @@ export default function DriverForm({
   onOpenChange,
 }: DriverFormProps) {
   const [formData, setFormData] = useState<DriverData>({
-    full_name: "",
-    contact_number: "",
+    name: "",
+    phone: "",
     email: "",
-    date_of_birth: "",
-    license_number: "",
-    license_category: "",
-    license_expiry: "",
-    joining_date: "",
-    status: "Available",
+    dateOfBirth: "",
+    licenseNumber: "",
+    licenseCategory: "",
+    licenseExpiry: "",
+    joiningDate: "",
+    status: "AVAILABLE",
   });
+  const qc = useQueryClient();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -51,12 +54,17 @@ export default function DriverForm({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log(formData);
-
-    // axios.post("/api/drivers", formData);
+    try {
+      await api.post("/drivers", formData);
+      qc.invalidateQueries({ queryKey: ["drivers"] });
+      onOpenChange(false);
+    } catch (error: any) {
+      console.error("Failed to submit driver form", error);
+      alert(error.response?.data?.message || error.response?.data?.errors?.[0]?.message || "Failed to submit form");
+    }
   };
 
   return (
@@ -87,8 +95,8 @@ export default function DriverForm({
             </Label>
 
             <Input
-              name="full_name"
-              value={formData.full_name}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               placeholder="Enter full name"
               className="bg-[#1B2432] border-[#334155] h-11"
@@ -103,8 +111,8 @@ export default function DriverForm({
             </Label>
 
             <Input
-              name="contact_number"
-              value={formData.contact_number}
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
               placeholder="9876543210"
               className="bg-[#1B2432] border-[#334155] h-11"
@@ -137,8 +145,8 @@ export default function DriverForm({
 
             <Input
               type="date"
-              name="date_of_birth"
-              value={formData.date_of_birth}
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
               onChange={handleChange}
               className="bg-[#1B2432] border-[#334155] h-11"
             />
@@ -152,8 +160,8 @@ export default function DriverForm({
             </Label>
 
             <Input
-              name="license_number"
-              value={formData.license_number}
+              name="licenseNumber"
+              value={formData.licenseNumber}
               onChange={handleChange}
               placeholder="DL0123456789"
               className="bg-[#1B2432] border-[#334155] h-11"
@@ -168,8 +176,8 @@ export default function DriverForm({
             </Label>
 
             <select
-              name="license_category"
-              value={formData.license_category}
+              name="licenseCategory"
+              value={formData.licenseCategory}
               onChange={handleChange}
               className="w-full h-11 rounded-md border border-[#334155] bg-[#1B2432] px-3 text-white"
             >
@@ -188,8 +196,8 @@ export default function DriverForm({
 
             <Input
               type="date"
-              name="license_expiry"
-              value={formData.license_expiry}
+              name="licenseExpiry"
+              value={formData.licenseExpiry}
               onChange={handleChange}
               className="bg-[#1B2432] border-[#334155] h-11"
             />
@@ -204,8 +212,8 @@ export default function DriverForm({
 
             <Input
               type="date"
-              name="joining_date"
-              value={formData.joining_date}
+              name="joiningDate"
+              value={formData.joiningDate}
               onChange={handleChange}
               className="bg-[#1B2432] border-[#334155] h-11"
             />
@@ -224,10 +232,10 @@ export default function DriverForm({
               onChange={handleChange}
               className="w-full h-11 rounded-md border border-[#334155] bg-[#1B2432] px-3 text-white"
             >
-              <option value="Available">Available</option>
-              <option value="On Trip">On Trip</option>
-              <option value="Leave">Leave</option>
-              <option value="Suspended">Suspended</option>
+              <option value="AVAILABLE">Available</option>
+              <option value="ON_TRIP">On Trip</option>
+              <option value="OFF_DUTY">Leave</option>
+              <option value="SUSPENDED">Suspended</option>
             </select>
           </div>
 

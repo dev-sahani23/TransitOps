@@ -2,7 +2,7 @@ const prisma = require('../config/db');
 
 exports.getAll = async ({ skip, take, search, status, category }) => {
   const where = {};
-  
+
   if (search) {
     where.OR = [
       { name: { contains: search, mode: 'insensitive' } },

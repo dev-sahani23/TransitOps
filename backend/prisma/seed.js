@@ -36,7 +36,8 @@ async function main() {
     const v = await prisma.vehicle.create({
       data: {
         registrationNumber: `TRK-${1000 + i}`,
-        vehicleName: `Volvo FH ${i}`,
+        make: `Volvo`,
+        model: `FH ${i}`,
         vehicleType: i % 3 === 0 ? 'Bus' : i % 2 === 0 ? 'Van' : 'Truck',
         maximumCapacity: 15000 + (i * 1000),
         odometer: 10000 + (i * 5000),
@@ -94,6 +95,7 @@ async function main() {
     await prisma.maintenanceLog.create({
       data: {
         vehicleId: vehicles[i].id,
+        type: 'repair',
         description: `Routine Service ${i}`,
         cost: 500 + (i * 100),
         status: 'COMPLETED',
@@ -123,7 +125,7 @@ async function main() {
     await prisma.expense.create({
       data: {
         vehicleId: vehicles[i].id,
-        type: i % 2 === 0 ? 'Tolls' : 'Parking',
+        category: i % 2 === 0 ? 'toll' : 'other',
         amount: 50 + (i * 5),
         date: new Date(),
       },

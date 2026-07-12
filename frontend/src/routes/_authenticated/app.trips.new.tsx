@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchVehicles, fetchDrivers } from "@/lib/fleet-queries";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -95,15 +96,27 @@ function NewTripPage() {
 
   const create = useMutation({
     mutationFn: async () => {
-      // Mock insert delay
-      await new Promise((r) => setTimeout(r, 800));
+      const payload = {
+        vehicleId,
+        driverId,
+        source: origin,
+        destination,
+        cargoWeight: 0,
+        cargo,
+        revenue,
+        plannedDistance: distance,
+        status: "DISPATCHED",
+        dispatchTime: new Date(scheduledAt).toISOString(),
+      };
+      const res = await api.post("/trips", payload);
+      return res.data;
     },
     onSuccess: () => {
       toast.success("Trip scheduled");
       qc.invalidateQueries();
       navigate({ to: "/app/dispatch" });
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e: any) => toast.error(e.response?.data?.message || e.response?.data?.errors?.[0]?.message || e.message || "Failed to schedule trip"),
   });
 
   const canSubmit = origin !== destination && vehicleId && driverId;
