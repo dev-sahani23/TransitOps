@@ -1,6 +1,29 @@
 # TransitOps
 
-Enterprise Fleet & Transport Operations Management Platform
+## Problem Statement
+
+Many transport and logistics companies still depend on spreadsheets,
+manual registers, and disconnected software to manage their fleet.
+
+This causes:
+
+• Duplicate dispatches
+
+• Driver scheduling conflicts
+
+• Expired licenses
+
+• Missed maintenance
+
+• Fuel leakage
+
+• Poor operational visibility
+
+• High operational costs
+
+TransitOps solves these problems through an integrated digital transport management platform capable of managing the complete lifecycle of vehicles, drivers, trips, maintenance, expenses, and business analytics.
+
+---
 
 A modern, full-stack Transport Operations Management Platform built to digitize fleet operations, driver management, dispatching, maintenance, fuel tracking, operational expenses, and business analytics.
 
