@@ -65,7 +65,7 @@ TransitOps enables organizations to efficiently manage transportation operations
 <img width="1560" height="635" alt="image" src="https://github.com/user-attachments/assets/d0d7edc5-9c48-436a-afe0-8a8720f01785" />
 
 ## Vehicle Maintainance
-<img width="1560" height="635" alt="image" src="https://github.com/user-attachments/assets/a1bd82b7-21bf-440c-bce1-1a9ddd6b29c6" />
+<img width="1532" height="620" alt="image" src="https://github.com/user-attachments/assets/f094b7aa-97a4-4eca-aad0-ed351aba18de" />
 
 ## Logistic Revenue
 <img width="1558" height="662" alt="image" src="https://github.com/user-attachments/assets/7ed41cf0-53e2-4d01-a128-912842a5760a" />
