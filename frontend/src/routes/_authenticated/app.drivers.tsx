@@ -4,7 +4,10 @@ import { fetchDrivers, fetchTrips } from "@/lib/fleet-queries";
 import { Card } from "@/components/ui/card";
 import { StatusPill, expiryBadge } from "@/lib/fleet-ui";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Phone, Star, ArrowRight } from "lucide-react";
+import { Phone, Star, ArrowRight, Plus } from "lucide-react";
+import { useState } from "react";
+import DriverForm from "@/components/ui/DriverForm";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/drivers")({
   head: () => ({ meta: [{ title: "Drivers — TransitOps" }] }),
@@ -12,6 +15,7 @@ export const Route = createFileRoute("/_authenticated/app/drivers")({
 });
 
 function DriversPage() {
+  const [openDriverForm, setOpenDriverForm] = useState(false);
   const { data: drivers = [] } = useQuery({ queryKey: ["drivers"], queryFn: fetchDrivers });
   const { data: trips = [] } = useQuery({ queryKey: ["trips"], queryFn: fetchTrips });
   const liveByDriver = new Map<string, any>();
@@ -23,14 +27,30 @@ function DriversPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <div className="text-xs uppercase tracking-wider text-muted-foreground">Team</div>
-        <h1 className="font-display text-3xl font-bold">Drivers</h1>
-        <p className="text-sm text-muted-foreground">
-          {drivers.length} drivers · {drivers.filter((d) => d.duty_status === "on_trip").length}{" "}
-          currently on trip
-        </p>
-      </div>
+      <div className="flex items-start justify-between">
+  <div>
+    <div className="text-xs uppercase tracking-wider text-muted-foreground">
+      Team
+    </div>
+
+    <h1 className="font-display text-3xl font-bold">
+      Drivers
+    </h1>
+
+    <p className="text-sm text-muted-foreground">
+      {drivers.length} drivers ·{" "}
+      {drivers.filter((d) => d.duty_status === "on_trip").length} currently on trip
+    </p>
+  </div>
+
+  <Button
+  className="bg-primary text-black hover:bg-primary/90 rounded-xl"
+  onClick={() => setOpenDriverForm(true)}
+>
+  <Plus className="mr-2 h-4 w-4" />
+  Driver
+</Button>
+</div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
         {drivers.map((d) => {
@@ -90,6 +110,10 @@ function DriversPage() {
           );
         })}
       </div>
+      <DriverForm
+  open={openDriverForm}
+  onOpenChange={setOpenDriverForm}
+/>
     </div>
   );
 }
