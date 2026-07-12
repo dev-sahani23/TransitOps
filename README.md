@@ -7,19 +7,19 @@ manual registers, and disconnected **software to manage their fleet**.
 
 **This causes:**
 
-**• Duplicate dispatches
+**• Duplicate dispatches**
 
-**• Driver scheduling conflicts
+**• Driver scheduling conflicts**
 
 **• Expired licenses**
 
 **• Missed maintenance**
 
-**• Fuel leakage
+**• Fuel leakage**
 
-**• Poor operational visibility
+**• Poor operational visibility**
 
-**• High operational costs
+**• High operational costs**
 
 TransitOps solves these problems through an integrated digital transport management platform capable of managing the complete lifecycle of vehicles, drivers, trips, maintenance, expenses, and business analytics.
 
