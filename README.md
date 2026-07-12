@@ -1,4 +1,4 @@
-<img width="1560" height="635" alt="image" src="https://github.com/user-attachments/assets/a1bd82b7-21bf-440c-bce1-1a9ddd6b29c6" /># TransitOps ( Transportantion Management System ) !!! 
+# TransitOps ( Transportantion Management System ) 
 
 ## Problem Statement ~ 
 
