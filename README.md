@@ -237,9 +237,12 @@ These validations are performed on the server before any business operation is e
 
 ## Database
 
-- PostgreSQL
-- Prisma Schema
-- Database Migrations
+- **PostgreSQL**
+  <img width="464" height="918" alt="image" src="https://github.com/user-attachments/assets/f517dd34-9006-4968-b11e-231510b3726e" />
+- **Prisma Schema**
+  <img width="1022" height="761" alt="image" src="https://github.com/user-attachments/assets/7e4e1d06-fd03-4fb2-bcfd-a7c091c1fc8b" />
+- **Database Migrations**
+  <img width="1062" height="740" alt="image" src="https://github.com/user-attachments/assets/3971a25b-4783-489a-ba5e-a79d6b42ebf6" />
 
 ---
 
