@@ -1,4 +1,4 @@
-# TransitOps ( Transportantion Management System ) 
+# TransitOps - Transportantion Management System  
 
 ## Problem Statement ~
 
