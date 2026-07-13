@@ -16,3 +16,23 @@ api.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+// Global response handler: redirect to sign-in on 401 and clear stored token
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    if (status === 401) {
+      try {
+        localStorage.removeItem('token');
+      } catch (e) {
+        // ignore
+      }
+      // If user not already on auth route, send them there
+      if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/auth')) {
+        window.location.href = '/auth';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
