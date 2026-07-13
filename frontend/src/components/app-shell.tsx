@@ -1,5 +1,5 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +26,7 @@ import {
   LogOut,
   Bell,
   Moon,
+  Sun,
 } from "lucide-react";
 
 import { useMyRoles, useProfile, hasRole } from "@/hooks/use-auth";
@@ -121,7 +122,13 @@ function useAlertCount() {
   });
 }
 
-function TopBar() {
+function TopBar({
+  theme,
+  setTheme,
+}: {
+  theme: "dark" | "light";
+  setTheme: (theme: "dark" | "light") => void;
+}) {
   const navigate = useNavigate();
   const { data: profile } = useProfile();
   const { data: roles } = useMyRoles();
@@ -149,6 +156,15 @@ function TopBar() {
     <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur">
       <SidebarTrigger />
       <div className="min-w-0 flex-1" />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative"
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      </Button>
       <Button variant="ghost" size="icon" className="relative">
         <Bell className="h-4 w-4" />
         {alerts > 0 && (
@@ -184,9 +200,9 @@ function TopBar() {
             {profile?.full_name ?? "User"}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem disabled>
-            <Moon className="mr-2 h-4 w-4" />
-            Dark theme (default)
+          <DropdownMenuItem onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            {theme === "dark" ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+            {theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={signOut} className="text-destructive">
             <LogOut className="mr-2 h-4 w-4" />
@@ -199,12 +215,28 @@ function TopBar() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const storedTheme = window.localStorage.getItem("transitops-theme") as "dark" | "light" | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = storedTheme ?? (prefersDark ? "dark" : "light");
+    setTheme(initialTheme);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    root.style.colorScheme = theme;
+    window.localStorage.setItem("transitops-theme", theme);
+  }, [theme]);
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <InnerSidebar />
         <div className="flex min-w-0 flex-1 flex-col">
-          <TopBar />
+          <TopBar theme={theme} setTheme={setTheme} />
           <main className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
