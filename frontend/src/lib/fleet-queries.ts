@@ -325,8 +325,8 @@ export async function fetchDashboard() {
     return {
       vehicles: await fetchVehicles(),
       drivers: await fetchDrivers(),
-      trips: mockTrips,
-      expenses: mockExpenses,
+      trips: await fetchTrips(),
+      expenses: await fetchExpenses(),
       stats: res.data.data,
     };
   } catch (error) {
