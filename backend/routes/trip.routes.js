@@ -10,10 +10,10 @@ router.use(verifyToken);
 router.get('/', tripController.getAll);
 router.get('/:id', tripController.getById);
 
-router.use(authorizeRole('ADMIN', 'FLEET_MANAGER', 'DISPATCHER'));
+const requirePrivilege = authorizeRole('ADMIN', 'FLEET_MANAGER', 'DISPATCHER');
 
-router.post('/', tripValidation, validate, tripController.create);
-router.put('/:id', tripValidation, validate, tripController.update);
-router.delete('/:id', tripController.remove);
+router.post('/', requirePrivilege, tripValidation, validate, tripController.create);
+router.put('/:id', requirePrivilege, tripValidation, validate, tripController.update);
+router.delete('/:id', requirePrivilege, tripController.remove);
 
 export default router;

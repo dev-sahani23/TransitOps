@@ -99,7 +99,7 @@ const mockTrips: (Trip & { vehicle: Vehicle | null; driver: Driver | null })[] =
   {
     id: "t1",
     code: "TRP-1001",
-    status: "DISPATCHED",
+    status: "in_transit",
     revenue: 15000,
     scheduled_at: "2026-07-12T08:00:00Z",
     completed_at: null,
@@ -117,7 +117,7 @@ const mockTrips: (Trip & { vehicle: Vehicle | null; driver: Driver | null })[] =
   {
     id: "t2",
     code: "TRP-1000",
-    status: "COMPLETED",
+    status: "completed",
     revenue: 8500,
     scheduled_at: "2026-07-11T09:00:00Z",
     completed_at: "2026-07-11T14:30:00Z",
@@ -217,27 +217,65 @@ export async function fetchDrivers(): Promise<Driver[]> {
   }
 }
 
+const CITIES: Record<string, [number, number]> = {
+  Bengaluru: [12.9716, 77.5946],
+  Mysuru: [12.2958, 76.6394],
+  Chennai: [13.0827, 80.2707],
+  Mumbai: [19.076, 72.8777],
+  Pune: [18.5204, 73.8567],
+  Hyderabad: [17.385, 78.4867],
+  Coimbatore: [11.0168, 76.9558],
+  Kochi: [9.9312, 76.2673],
+  Ahmedabad: [23.0225, 72.5714],
+  Surat: [21.1702, 72.8311],
+  Madurai: [9.9252, 78.1198],
+  Mangaluru: [12.9141, 74.856],
+  Tirupati: [13.6288, 79.4192],
+  Vellore: [12.9165, 79.1325],
+  Hubli: [15.3647, 75.124],
+  Belagavi: [15.8497, 74.4977],
+  Salem: [11.6643, 78.146],
+  Nashik: [19.9975, 73.7898],
+};
+
+function getCoords(cityName: string): [number, number] {
+  if (CITIES[cityName]) return CITIES[cityName];
+  const keys = Object.keys(CITIES);
+  const hash = cityName.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return CITIES[keys[hash % keys.length]];
+}
+
 export async function fetchTrips(): Promise<Trip[]> {
   try {
     const res = await api.get("/trips");
-    return res.data.data.trips.map((backendTrip: any) => ({
-      id: backendTrip.id,
-      code: backendTrip.id.substring(0, 8).toUpperCase(),
-      status: backendTrip.status,
-      revenue: backendTrip.revenue,
-      scheduled_at: backendTrip.dispatchTime || backendTrip.createdAt,
-      completed_at: backendTrip.completionTime,
-      distance_km: backendTrip.plannedDistance,
-      origin: backendTrip.source,
-      destination: backendTrip.destination,
-      origin_lat: 0,
-      origin_lng: 0,
-      dest_lat: 0,
-      dest_lng: 0,
-      cargo_description: backendTrip.cargo,
-      vehicle: backendTrip.vehicle ? mapVehicle(backendTrip.vehicle) : null,
-      driver: backendTrip.driver ? mapDriver(backendTrip.driver) : null,
-    }));
+    const statusMap: Record<string, string> = {
+      DRAFT: "scheduled",
+      DISPATCHED: "in_transit",
+      COMPLETED: "completed",
+      CANCELLED: "cancelled"
+    };
+    return res.data.data.trips.map((backendTrip: any) => {
+      const originCoords = getCoords(backendTrip.source);
+      const destCoords = getCoords(backendTrip.destination);
+      return {
+        id: backendTrip.id,
+        code: backendTrip.id.substring(0, 8).toUpperCase(),
+        status: statusMap[backendTrip.status] || backendTrip.status.toLowerCase(),
+        revenue: backendTrip.revenue,
+        scheduled_at: backendTrip.dispatchTime || backendTrip.createdAt,
+        completed_at: backendTrip.completionTime,
+        distance_km: backendTrip.plannedDistance,
+        origin: backendTrip.source,
+        destination: backendTrip.destination,
+        origin_lat: originCoords[0],
+        origin_lng: originCoords[1],
+        dest_lat: destCoords[0],
+        dest_lng: destCoords[1],
+        cargo_description: backendTrip.cargo,
+        vehicle: backendTrip.vehicle ? mapVehicle(backendTrip.vehicle) : null,
+        driver: backendTrip.driver ? mapDriver(backendTrip.driver) : null,
+      };
+    });
   } catch (error) {
     console.warn("Failed to fetch trips from backend, falling back to mock", error);
     return mockTrips;

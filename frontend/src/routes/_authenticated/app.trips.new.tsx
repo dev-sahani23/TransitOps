@@ -53,7 +53,7 @@ function haversine(a: [number, number], b: [number, number]) {
   const s =
     Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLng / 2) ** 2;
-  return Math.round(2 * R * Math.asin(Math.sqrt(s)));
+  return Math.round(2 * R * Math.asin(Math.sqrt(Math.min(1, s))));
 }
 
 function NewTripPage() {
@@ -69,7 +69,8 @@ function NewTripPage() {
   const [scheduledAt, setScheduledAt] = useState(() => {
     const d = new Date();
     d.setHours(d.getHours() + 2, 0, 0, 0);
-    return d.toISOString().slice(0, 16);
+    const offset = d.getTimezoneOffset() * 60000;
+    return new Date(d.getTime() - offset).toISOString().slice(0, 16);
   });
   const [cargo, setCargo] = useState("General freight");
   const [revenue, setRevenue] = useState(25000);

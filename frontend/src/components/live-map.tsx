@@ -53,10 +53,10 @@ function useAnimatedPosition(trip: any) {
   useEffect(() => {
     let raf: number;
     const start = performance.now();
-    const dur = 18000; // 18s to cross full route, then loops
+    const dur = 60000; // 60s to cross full route, then loops
     const tick = (t: number) => {
       const elapsed = (t - start) % dur;
-      let p = elapsed / dur;
+      let p = Math.min(elapsed / dur, 1);
       // ease-in-out
       p = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
       const lat = trip.origin_lat + (trip.dest_lat - trip.origin_lat) * p;

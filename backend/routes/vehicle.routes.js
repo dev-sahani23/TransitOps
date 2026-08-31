@@ -11,10 +11,10 @@ router.get('/', vehicleController.getAll);
 router.get('/:id', vehicleController.getById);
 
 // Protected routes for Admin & Fleet Manager
-router.use(authorizeRole('ADMIN', 'FLEET_MANAGER'));
+const requirePrivilege = authorizeRole('ADMIN', 'FLEET_MANAGER');
 
-router.post('/', vehicleValidation, validate, vehicleController.create);
-router.put('/:id', vehicleValidation, validate, vehicleController.update);
-router.delete('/:id', vehicleController.remove);
+router.post('/', requirePrivilege, vehicleValidation, validate, vehicleController.create);
+router.put('/:id', requirePrivilege, vehicleValidation, validate, vehicleController.update);
+router.delete('/:id', requirePrivilege, vehicleController.remove);
 
 export default router;

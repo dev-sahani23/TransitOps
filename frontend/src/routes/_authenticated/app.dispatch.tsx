@@ -71,7 +71,7 @@ function DispatchPage() {
         </Card>
 
         <Card className="xl:col-span-2 flex flex-col overflow-hidden p-0">
-          <Tabs defaultValue="in_transit" className="flex h-[600px] flex-col">
+          <Tabs defaultValue="in_transit" className="flex h-150 flex-col">
             <TabsList className="mx-4 mt-3 grid grid-cols-3">
               {cols.map((c) => (
                 <TabsTrigger key={c.key} value={c.key} className="text-xs">
