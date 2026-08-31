@@ -65,7 +65,7 @@ function DispatchPage() {
               <span className="signal-pulse h-2 w-2 rounded-full bg-success" /> Realtime
             </div>
           </div>
-          <div className="h-[560px]">
+          <div className="h-140">
             <LiveMap trips={trips.filter((t) => t.status === "in_transit")} />
           </div>
         </Card>
