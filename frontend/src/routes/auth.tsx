@@ -58,7 +58,8 @@ function AuthPage() {
       toast.success("Account created — signing you in");
       navigate({ to: "/app/dashboard" });
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "Signup failed");
+      const errorMsg = err.response?.data?.errors?.[0]?.message || err.response?.data?.message || "Signup failed";
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
