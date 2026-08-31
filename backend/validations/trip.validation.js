@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body  } from 'express-validator';
 
-exports.tripValidation = [
+export const tripValidation = [
   body('vehicleId').notEmpty().withMessage('Vehicle ID is required'),
   body('driverId').notEmpty().withMessage('Driver ID is required'),
   body('source').notEmpty().withMessage('Source is required'),

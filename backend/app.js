@@ -1,23 +1,20 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
+import 'dotenv/config.js';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
-const { globalErrorHandler } = require('./middleware/errorHandler');
+import { globalErrorHandler  } from './middleware/errorHandler.js';
 
 // Route Imports
-const authRoutes = require('./routes/auth.routes');
-const vehicleRoutes = require('./routes/vehicle.routes');
-const driverRoutes = require('./routes/driver.routes');
-const dashboardRoutes = require('./routes/dashboard.routes');
-// TODO: Developer B - Import your routes here
-// const tripRoutes = require('./routes/trip.routes');
-// const maintenanceRoutes = require('./routes/maintenance.routes');
-// const fuelRoutes = require('./routes/fuel.routes');
-// const expenseRoutes = require('./routes/expense.routes');
-// const reportRoutes = require('./routes/report.routes');
+import authRoutes from './routes/auth.routes.js';
+import vehicleRoutes from './routes/vehicle.routes.js';
+import driverRoutes from './routes/driver.routes.js';
+import tripRoutes from './routes/trip.routes.js';
+import maintenanceRoutes from './routes/maintenance.routes.js';
+import expenseRoutes from './routes/expense.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
 
 const app = express();
 
@@ -37,10 +34,6 @@ app.get('/api/v1/health', (req, res) => {
 });
 
 // Mount Routes
-const tripRoutes = require('./routes/trip.routes');
-const maintenanceRoutes = require('./routes/maintenance.routes');
-const expenseRoutes = require('./routes/expense.routes');
-
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/vehicles', vehicleRoutes);
 app.use('/api/v1/drivers', driverRoutes);
@@ -48,12 +41,8 @@ app.use('/api/v1/trips', tripRoutes);
 app.use('/api/v1/maintenance', maintenanceRoutes);
 app.use('/api/v1/expenses', expenseRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
-// app.use('/api/v1/maintenance', maintenanceRoutes);
-// app.use('/api/v1/fuel', fuelRoutes);
-// app.use('/api/v1/expenses', expenseRoutes);
-// app.use('/api/v1/reports', reportRoutes);
 
 // Global Error Handler
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;

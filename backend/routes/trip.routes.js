@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const tripController = require('../controllers/trip.controller');
-const { tripValidation } = require('../validations/trip.validation');
-const { validate } = require('../middleware/validate');
-const { verifyToken, authorizeRole } = require('../middleware/auth');
+import * as tripController from '../controllers/trip.controller.js';
+import { tripValidation  } from '../validations/trip.validation.js';
+import { validate  } from '../middleware/validate.js';
+import { verifyToken, authorizeRole  } from '../middleware/auth.js';
 
 router.use(verifyToken);
 
@@ -14,6 +14,6 @@ router.use(authorizeRole('ADMIN', 'FLEET_MANAGER', 'DISPATCHER'));
 
 router.post('/', tripValidation, validate, tripController.create);
 router.put('/:id', tripValidation, validate, tripController.update);
-router.delete('/:id', tripController.delete);
+router.delete('/:id', tripController.remove);
 
-module.exports = router;
+export default router;

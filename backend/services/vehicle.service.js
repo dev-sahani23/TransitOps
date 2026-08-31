@@ -1,13 +1,13 @@
-const prisma = require('../config/db');
+import prisma from '../config/db.js';
 
-exports.getAll = async ({ skip, take, search, status, type }) => {
+export const getAll = async ({ skip, take, search, status, type }) => {
   const where = {};
   
   if (search) {
     where.OR = [
-      { registrationNumber: { contains: search, mode: 'insensitive' } },
-      { make: { contains: search, mode: 'insensitive' } },
-      { model: { contains: search, mode: 'insensitive' } },
+      { registrationNumber: { contains: search } },
+      { make: { contains: search } },
+      { model: { contains: search } },
     ];
   }
   
@@ -32,7 +32,7 @@ exports.getAll = async ({ skip, take, search, status, type }) => {
   return { vehicles, total };
 };
 
-exports.getById = async (id) => {
+export const getById = async (id) => {
   return prisma.vehicle.findUnique({
     where: { id },
     include: {
@@ -43,13 +43,13 @@ exports.getById = async (id) => {
   });
 };
 
-exports.create = async (data) => {
+export const create = async (data) => {
   return prisma.vehicle.create({
     data
   });
 };
 
-exports.update = async (id, data) => {
+export const update = async (id, data) => {
   const vehicle = await prisma.vehicle.findUnique({ where: { id } });
   if (!vehicle) {
     throw new Error('Vehicle not found');
@@ -65,7 +65,7 @@ exports.update = async (id, data) => {
   });
 };
 
-exports.delete = async (id) => {
+export const remove = async (id) => {
   const activeTrips = await prisma.trip.count({
     where: {
       vehicleId: id,

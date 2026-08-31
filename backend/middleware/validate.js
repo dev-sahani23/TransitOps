@@ -1,7 +1,7 @@
-const { validationResult } = require('express-validator');
-const { error } = require('../utils/apiResponse');
+import { validationResult  } from 'express-validator';
+import { error  } from '../utils/apiResponse.js';
 
-exports.validate = (req, res, next) => {
+export const validate = (req, res, next) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
     // Format errors to a simple array of messages

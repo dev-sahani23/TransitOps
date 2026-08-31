@@ -1,7 +1,7 @@
-const authService = require('../services/auth.service');
-const { success } = require('../utils/apiResponse');
+import * as authService from '../services/auth.service.js';
+import { success  } from '../utils/apiResponse.js';
 
-exports.register = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const user = await authService.register(req.body);
     return success(res, 201, 'User registered successfully', user);
@@ -13,7 +13,7 @@ exports.register = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const data = await authService.login(email, password);
@@ -26,7 +26,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.getProfile = async (req, res, next) => {
+export const getProfile = async (req, res, next) => {
   try {
     const user = await authService.getProfile(req.user.id);
     return success(res, 200, 'Profile retrieved successfully', user);

@@ -1,8 +1,8 @@
-const maintenanceService = require('../services/maintenance.service');
-const { success } = require('../utils/apiResponse');
-const { buildPagination } = require('../utils/pagination');
+import * as maintenanceService from '../services/maintenance.service.js';
+import { success  } from '../utils/apiResponse.js';
+import { buildPagination  } from '../utils/pagination.js';
 
-exports.getAll = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
   try {
     const { skip, take, page, limit } = buildPagination(req.query);
     const { search, status, vehicleId } = req.query;
@@ -15,7 +15,7 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
-exports.getById = async (req, res, next) => {
+export const getById = async (req, res, next) => {
   try {
     const log = await maintenanceService.getById(req.params.id);
     if (!log) return res.status(404).json({ success: false, message: 'Maintenance log not found', errors: [] });
@@ -25,7 +25,7 @@ exports.getById = async (req, res, next) => {
   }
 };
 
-exports.create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   try {
     const data = { ...req.body };
     if (data.odometer === "") data.odometer = null;
@@ -38,7 +38,7 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.update = async (req, res, next) => {
+export const update = async (req, res, next) => {
   try {
     const data = { ...req.body };
     if (data.odometer === "") data.odometer = null;
@@ -54,9 +54,9 @@ exports.update = async (req, res, next) => {
   }
 };
 
-exports.delete = async (req, res, next) => {
+export const remove = async (req, res, next) => {
   try {
-    await maintenanceService.delete(req.params.id);
+    await maintenanceService.remove(req.params.id);
     return success(res, 200, 'Maintenance log deleted successfully', null);
   } catch (error) {
     next(error);

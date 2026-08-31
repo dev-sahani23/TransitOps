@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body  } from 'express-validator';
 
-exports.maintenanceValidation = [
+export const maintenanceValidation = [
   body('vehicleId').notEmpty().withMessage('Vehicle ID is required'),
   body('type').notEmpty().withMessage('Type is required'),
   body('description').notEmpty().withMessage('Description is required'),

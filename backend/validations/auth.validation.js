@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body } from 'express-validator';
 
-exports.registerValidation = [
+export const registerValidation = [
   body('name')
     .notEmpty().withMessage('Name is required')
     .isLength({ min: 2, max: 50 }).withMessage('Name must be between 2 and 50 characters'),
@@ -19,7 +19,7 @@ exports.registerValidation = [
     .withMessage('Invalid role')
 ];
 
-exports.loginValidation = [
+export const loginValidation = [
   body('email')
     .notEmpty().withMessage('Email is required')
     .isEmail().withMessage('Must be a valid email address'),

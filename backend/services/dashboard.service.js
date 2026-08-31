@@ -1,6 +1,6 @@
-const prisma = require('../config/db');
+import prisma from '../config/db.js';
 
-exports.getDashboardStats = async () => {
+export const getDashboardStats = async () => {
   // 1. Vehicle Stats
   const totalVehicles = await prisma.vehicle.count();
   const availableVehicles = await prisma.vehicle.count({ where: { status: 'AVAILABLE' } });

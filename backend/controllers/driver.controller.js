@@ -1,8 +1,8 @@
-const driverService = require('../services/driver.service');
-const { success } = require('../utils/apiResponse');
-const { buildPagination } = require('../utils/pagination');
+import * as driverService from '../services/driver.service.js';
+import { success  } from '../utils/apiResponse.js';
+import { buildPagination  } from '../utils/pagination.js';
 
-exports.getAll = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
   try {
     const { skip, take, page, limit } = buildPagination(req.query);
     const { search, status, category } = req.query;
@@ -18,7 +18,7 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
-exports.getById = async (req, res, next) => {
+export const getById = async (req, res, next) => {
   try {
     const driver = await driverService.getById(req.params.id);
     if (!driver) {
@@ -30,7 +30,7 @@ exports.getById = async (req, res, next) => {
   }
 };
 
-exports.create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   try {
     const data = { ...req.body };
     // Convert empty strings to null for optional fields to satisfy Prisma
@@ -46,7 +46,7 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.update = async (req, res, next) => {
+export const update = async (req, res, next) => {
   try {
     const data = { ...req.body };
     if (data.email === "") data.email = null;
@@ -64,9 +64,9 @@ exports.update = async (req, res, next) => {
   }
 };
 
-exports.delete = async (req, res, next) => {
+export const remove = async (req, res, next) => {
   try {
-    await driverService.delete(req.params.id);
+    await driverService.remove(req.params.id);
     return success(res, 200, 'Driver deleted successfully', null);
   } catch (error) {
     if (error.message.includes('active trips')) {

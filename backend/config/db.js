@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient  } from '@prisma/client';
 
 // Use a singleton instance in development to prevent too many connections
 // during hot-reloading (if any) or module re-evaluations.
@@ -8,4 +8,4 @@ if (process.env.NODE_ENV !== 'production') {
   global.prisma = prisma;
 }
 
-module.exports = prisma;
+export default prisma;

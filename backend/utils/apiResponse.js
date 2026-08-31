@@ -5,7 +5,7 @@
  * @param {string} message - Success message
  * @param {any} data - Response payload
  */
-exports.success = (res, statusCode = 200, message = 'Success', data = null) => {
+export const success = (res, statusCode = 200, message = 'Success', data = null) => {
   return res.status(statusCode).json({
     success: true,
     message,
@@ -20,7 +20,7 @@ exports.success = (res, statusCode = 200, message = 'Success', data = null) => {
  * @param {string} message - Error message
  * @param {any} errors - Detailed errors array or object
  */
-exports.error = (res, statusCode = 500, message = 'Internal Server Error', errors = []) => {
+export const error = (res, statusCode = 500, message = 'Internal Server Error', errors = []) => {
   return res.status(statusCode).json({
     success: false,
     message,

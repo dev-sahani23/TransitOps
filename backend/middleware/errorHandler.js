@@ -1,7 +1,7 @@
-const { error } = require('../utils/apiResponse');
-const { Prisma } = require('@prisma/client');
+import { error  } from '../utils/apiResponse.js';
+import { Prisma  } from '@prisma/client';
 
-exports.globalErrorHandler = (err, req, res, next) => {
+export const globalErrorHandler = (err, req, res, next) => {
   console.error(err);
 
   // Prisma Unique Constraint Error

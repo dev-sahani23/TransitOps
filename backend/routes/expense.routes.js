@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const expenseController = require('../controllers/expense.controller');
-const { expenseValidation } = require('../validations/expense.validation');
-const { validate } = require('../middleware/validate');
-const { verifyToken, authorizeRole } = require('../middleware/auth');
+import * as expenseController from '../controllers/expense.controller.js';
+import { expenseValidation  } from '../validations/expense.validation.js';
+import { validate  } from '../middleware/validate.js';
+import { verifyToken, authorizeRole  } from '../middleware/auth.js';
 
 router.use(verifyToken);
 
@@ -14,6 +14,6 @@ router.use(authorizeRole('ADMIN', 'FLEET_MANAGER', 'DISPATCHER'));
 
 router.post('/', expenseValidation, validate, expenseController.create);
 router.put('/:id', expenseValidation, validate, expenseController.update);
-router.delete('/:id', expenseController.delete);
+router.delete('/:id', expenseController.remove);
 
-module.exports = router;
+export default router;

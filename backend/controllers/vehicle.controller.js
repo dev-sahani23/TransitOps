@@ -1,8 +1,8 @@
-const vehicleService = require('../services/vehicle.service');
-const { success } = require('../utils/apiResponse');
-const { buildPagination } = require('../utils/pagination');
+import * as vehicleService from '../services/vehicle.service.js';
+import { success  } from '../utils/apiResponse.js';
+import { buildPagination  } from '../utils/pagination.js';
 
-exports.getAll = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
   try {
     const { skip, take, page, limit } = buildPagination(req.query);
     const { search, status, type } = req.query;
@@ -18,7 +18,7 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
-exports.getById = async (req, res, next) => {
+export const getById = async (req, res, next) => {
   try {
     const vehicle = await vehicleService.getById(req.params.id);
     if (!vehicle) {
@@ -30,7 +30,7 @@ exports.getById = async (req, res, next) => {
   }
 };
 
-exports.create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   try {
     const vehicle = await vehicleService.create(req.body);
     return success(res, 201, 'Vehicle created successfully', vehicle);
@@ -39,7 +39,7 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.update = async (req, res, next) => {
+export const update = async (req, res, next) => {
   try {
     const vehicle = await vehicleService.update(req.params.id, req.body);
     return success(res, 200, 'Vehicle updated successfully', vehicle);
@@ -54,9 +54,9 @@ exports.update = async (req, res, next) => {
   }
 };
 
-exports.delete = async (req, res, next) => {
+export const remove = async (req, res, next) => {
   try {
-    await vehicleService.delete(req.params.id);
+    await vehicleService.remove(req.params.id);
     return success(res, 200, 'Vehicle deleted successfully', null);
   } catch (error) {
     if (error.message.includes('active trips')) {

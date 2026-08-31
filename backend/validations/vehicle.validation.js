@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body  } from 'express-validator';
 
-exports.vehicleValidation = [
+export const vehicleValidation = [
   body('registrationNumber')
     .notEmpty().withMessage('Registration number is required')
     .matches(/^[A-Za-z0-9-]+$/).withMessage('Registration number must be alphanumeric'),

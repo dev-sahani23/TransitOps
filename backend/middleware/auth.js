@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const { secret } = require('../config/jwt');
-const { error } = require('../utils/apiResponse');
+import jwt from 'jsonwebtoken';
+import { secret  } from '../config/jwt.js';
+import { error  } from '../utils/apiResponse.js';
 
-exports.verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -23,7 +23,7 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-exports.authorizeRole = (...roles) => {
+export const authorizeRole = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
       return error(res, 403, 'Forbidden: Insufficient privileges');

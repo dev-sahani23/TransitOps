@@ -3,7 +3,7 @@
  * @param {Object} query - Express request query object
  * @returns {Object} { skip, take, page, limit }
  */
-exports.buildPagination = (query) => {
+export const buildPagination = (query) => {
   const page = parseInt(query.page, 10) > 0 ? parseInt(query.page, 10) : 1;
   const limit = parseInt(query.limit, 10) > 0 ? parseInt(query.limit, 10) : 10;
   

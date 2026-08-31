@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body  } from 'express-validator';
 
-exports.expenseValidation = [
+export const expenseValidation = [
   body('vehicleId').notEmpty().withMessage('Vehicle ID is required'),
   body('tripId').optional({ checkFalsy: true }).isString(),
   body('category').notEmpty().withMessage('Category is required'),

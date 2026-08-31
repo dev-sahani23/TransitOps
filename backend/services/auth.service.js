@@ -1,9 +1,9 @@
-const prisma = require('../config/db');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { secret, expiresIn } = require('../config/jwt');
+import prisma from '../config/db.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { secret, expiresIn  } from '../config/jwt.js';
 
-exports.register = async (data) => {
+export const register = async (data) => {
   const { name, email, password, role } = data;
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -26,7 +26,7 @@ exports.register = async (data) => {
   return userWithoutPassword;
 };
 
-exports.login = async (email, password) => {
+export const login = async (email, password) => {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
     throw new Error('Invalid email or password');
@@ -49,7 +49,7 @@ exports.login = async (email, password) => {
   return { token, user: userWithoutPassword };
 };
 
-exports.getProfile = async (userId) => {
+export const getProfile = async (userId) => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {
     throw new Error('User not found');

@@ -1,12 +1,12 @@
-const prisma = require('../config/db');
+import prisma from '../config/db.js';
 
-exports.getAll = async ({ skip, take, search, status, category }) => {
+export const getAll = async ({ skip, take, search, status, category }) => {
   const where = {};
 
   if (search) {
     where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { licenseNumber: { contains: search, mode: 'insensitive' } },
+      { name: { contains: search } },
+      { licenseNumber: { contains: search } },
     ];
   }
   
@@ -31,7 +31,7 @@ exports.getAll = async ({ skip, take, search, status, category }) => {
   return { drivers, total };
 };
 
-exports.getById = async (id) => {
+export const getById = async (id) => {
   return prisma.driver.findUnique({
     where: { id },
     include: {
@@ -42,13 +42,13 @@ exports.getById = async (id) => {
   });
 };
 
-exports.create = async (data) => {
+export const create = async (data) => {
   return prisma.driver.create({
     data
   });
 };
 
-exports.update = async (id, data) => {
+export const update = async (id, data) => {
   const driver = await prisma.driver.findUnique({ where: { id } });
   if (!driver) {
     throw new Error('Driver not found');
@@ -60,7 +60,7 @@ exports.update = async (id, data) => {
   });
 };
 
-exports.delete = async (id) => {
+export const remove = async (id) => {
   const activeTrips = await prisma.trip.count({
     where: {
       driverId: id,
